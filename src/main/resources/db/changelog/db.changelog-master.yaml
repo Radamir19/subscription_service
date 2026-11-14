@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - includeAll:
+      path: db/changelog/changes
+      resourceComparator: org.example.subscription_service.config.NumberComparator
