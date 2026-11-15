@@ -9,7 +9,7 @@ public class UserMapper {
     public UserRegisterDto toDto(UserEntity entity, Long maxFileSize) {
         return new UserRegisterDto(
                 entity.getLogin(),
-                entity.getSubType(),
+                entity.getSubscription().getSubType(),
                 entity.getExpireAt(),
                 maxFileSize
         );

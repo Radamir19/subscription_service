@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
-    List<UserEntity> findBySubTypeNotAndExpireAtBeforeOrderByExpireAtAsc(
+    List<UserEntity> findBySubscription_SubTypeNotAndExpireAtBeforeOrderByExpireAtAsc(
             String subType,
             OffsetDateTime now,
             Limit limit

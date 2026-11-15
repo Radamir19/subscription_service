@@ -1,9 +1,6 @@
 package org.example.subscription_service.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,7 +19,13 @@ public class UserEntity {
     private String login;
 
     @Column(nullable = false)
-    private String subType;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+            name = "sub_type",
+            referencedColumnName = "sub_type",
+            nullable = false
+    )
+    private SubscriptionEntity subscription;
 
     private OffsetDateTime expireAt;
 }
