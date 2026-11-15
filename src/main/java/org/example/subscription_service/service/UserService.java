@@ -36,7 +36,7 @@ public class UserService {
     public UserRegisterDto getUser(String login) {
         UserEntity entity = userRepository.findById(login)
                 .orElseThrow(() -> new UserNotFoundException("Пользователя с таким логином нет."));
-        return userMapper.toDto(entity, getMaxFileSize(entity));
+        return userMapper.toDto(entity, entity.getSubscription().getMaxFileSize());
     }
 
     @Transactional
@@ -56,7 +56,7 @@ public class UserService {
                     entity.getLogin(),
                     entity.getSubscription().getSubType(),
                     entity.getExpireAt(),
-                    getMaxFileSize(entity)
+                    entity.getSubscription().getMaxFileSize()
             );
             OutboxEntity outbox = new OutboxEntity();
             outbox.setId(UUID.randomUUID());
@@ -68,15 +68,5 @@ public class UserService {
         }
         outboxRepository.saveAll(outboxEntities);
         userRepository.saveAll(expiredUsers);
-    }
-
-    private Long getMaxFileSize(UserEntity entity) {
-        boolean activePaid = SubType.PAID.name().equals(entity.getSubscription().getSubType())
-                && entity.getExpireAt() != null
-                && entity.getExpireAt().isAfter(OffsetDateTime.now());
-        Long maxFileSizeBytes = activePaid
-                ? null
-                : 100L * 1024 * 1024;
-        return maxFileSizeBytes;
     }
 }
