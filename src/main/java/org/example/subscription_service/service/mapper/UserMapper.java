@@ -6,11 +6,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
-    public UserRegisterDto toDto(UserEntity entity) {
+    public UserRegisterDto toDto(UserEntity entity, Long maxFileSize) {
         return new UserRegisterDto(
                 entity.getLogin(),
                 entity.getSubType(),
-                entity.getExpireAt()
+                entity.getExpireAt(),
+                maxFileSize
         );
     }
 }

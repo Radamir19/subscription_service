@@ -18,21 +18,9 @@ import org.springframework.web.bind.annotation.*;
 public class SubscriptionController {
     private final UserService userService;
 
-    @PostMapping
-    @Operation(summary = "Создаём пользователя(подписка бесплатная по умолчанию)")
-    public ResponseEntity<UserRegisterDto> registerUser(@RequestParam String login) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(login));
-    }
-
-    @GetMapping("/{id}")
+    @GetMapping("/{login}")
     @Operation(summary = "Получаем пользователя(логин, тип подписки, дата окончания срока подписки)")
     public ResponseEntity<UserRegisterDto> getUser(@PathVariable("id") String login) {
         return ResponseEntity.ok().body(userService.getUser(login));
-    }
-
-    @PutMapping("/{id}")
-    @Operation(summary = "Делаем подписку платной")
-    public ResponseEntity<UserRegisterDto> updateSubscription(@PathVariable("id") String login) {
-        return ResponseEntity.ok().body(userService.paidSubType(login));
     }
 }

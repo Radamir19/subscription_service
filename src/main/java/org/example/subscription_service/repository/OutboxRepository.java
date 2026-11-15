@@ -13,5 +13,8 @@ import java.util.UUID;
 
 @Repository
 public interface OutboxRepository extends JpaRepository<OutboxEntity, UUID> {
-    List<OutboxEntity> findByPublishedAtIsNullOrderByCreatedAtAsc(Limit limit);
+    List<OutboxEntity> findByPublishedAtIsNullAndAttemptsLessThanOrderByCreatedAtAsc(
+            short maxAttempts,
+            Limit limit
+    );
 }
